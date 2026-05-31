@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sara — CFD Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #1a56db;
+    --accent-light: #e8f0fe;
+    --accent-mid: #4f7fef;
+    --bg: #f9f9f8;
+    --surface: #ffffff;
+    --text: #111110;
+    --text-muted: #6b6b68;
+    --text-faint: #a0a09c;
+    --border: #e4e4e0;
+    --radius: 12px;
+    --radius-sm: 7px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .wrapper { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+  section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+  section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  h2 { font-size: 28px; font-weight: 500; line-height: 1.3; margin-bottom: 16px; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(249,249,248,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+  }
+  .nav-inner {
+    max-width: 860px; margin: 0 auto; height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { font-size: 14px; font-weight: 500; color: var(--text); text-decoration: none; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  #hero { padding-top: 80px; padding-bottom: 80px; }
+  .hero-name { font-size: clamp(36px, 6vw, 58px); font-weight: 300; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .hero-name span { font-weight: 500; color: var(--accent); }
+  .hero-role { font-size: 16px; color: var(--text-muted); margin-bottom: 24px; }
+  .hero-bio { font-size: 15px; color: var(--text-muted); max-width: 540px; line-height: 1.75; margin-bottom: 36px; }
+  .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 36px; }
+  .stat-item { text-align: left; }
+  .stat-num { font-size: 26px; font-weight: 500; color: var(--text); line-height: 1; margin-bottom: 4px; }
+  .stat-desc { font-size: 12px; color: var(--text-faint); font-family: 'DM Mono', monospace; letter-spacing: 0.04em; }
+  .hero-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge { font-size: 12px; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border); color: var(--text-muted); background: var(--surface); }
+  .badge.accent { background: var(--accent-light); color: var(--accent); border-color: transparent; }
+
+  /* SKILLS */
+  .skills-group { margin-bottom: 24px; }
+  .skills-group-title { font-size: 12px; font-family: 'DM Mono', monospace; color: var(--text-faint); letter-spacing: 0.06em; margin-bottom: 10px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { font-size: 13px; padding: 6px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); color: var(--text); background: var(--surface); }
+  .chip.primary { background: var(--accent-light); color: var(--accent); border-color: transparent; font-weight: 500; }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 600px) { .projects-grid { grid-template-columns: 1fr; } }
+
+  .proj-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .proj-card:hover {
+    border-color: var(--accent-mid);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,86,219,0.08);
+  }
+
+  .proj-img { width: 100%; height: 180px; object-fit: cover; display: block; background: var(--accent-light); }
+  .proj-img-placeholder {
+    width: 100%; height: 180px; background: var(--accent-light);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent-mid); letter-spacing: 0.06em;
+  }
+
+  .proj-body { padding: 18px 20px; }
+  .proj-number { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-faint); margin-bottom: 6px; }
+  .proj-title { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 8px; line-height: 1.4; }
+  .proj-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; margin-bottom: 14px; }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .proj-tag { font-size: 11px; padding: 3px 9px; border-radius: 20px; border: 1px solid var(--border); color: var(--text-faint); }
+
+  /* CLICK HINT */
+  .click-hint {
+    font-size: 11px; font-family: 'DM Mono', monospace;
+    color: var(--accent); margin-top: 10px; display: flex;
+    align-items: center; gap: 4px; opacity: 0.7;
+  }
+
+  /* ============================================================
+     MODAL
+     ============================================================ */
+  .modal {
+    display: none;
+    position: fixed; z-index: 1000;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(17,17,16,0.55);
+    backdrop-filter: blur(8px);
+    overflow-y: auto;
+  }
+
+  .modal-content {
+    background: var(--surface);
+    margin: 40px auto;
+    border: 1px solid var(--border);
+    width: 90%; max-width: 780px;
+    border-radius: var(--radius);
+    position: relative;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.14);
+    animation: modalIn 0.2s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .modal-header {
+    padding: 28px 32px 20px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .modal-proj-num {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: var(--accent); letter-spacing: 0.1em; margin-bottom: 6px;
+  }
+
+  .modal-title {
+    font-size: 19px; font-weight: 500; line-height: 1.35;
+    color: var(--text); padding-right: 36px;
+  }
+
+  .close-btn {
+    position: absolute; right: 24px; top: 24px;
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 1px solid var(--border); background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; line-height: 1; cursor: pointer;
+    color: var(--text-muted); transition: all 0.15s;
+  }
+  .close-btn:hover { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+
+  /* IMAGE GALLERY inside modal */
+  .modal-gallery {
+    display: grid;
+    /* عدّلي عدد الأعمدة حسب عدد الصور */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modal-gallery img {
+    width: 100%; height: 180px; object-fit: cover;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    cursor: zoom-in;
+    transition: opacity 0.15s;
+  }
+  .modal-gallery img:hover { opacity: 0.88; }
+
+  /* لو عايزة تحطي placeholder لصورة لسه مش جاهزة */
+  .modal-gallery .img-ph {
+    height: 180px; background: var(--accent-light);
+    border-radius: var(--radius-sm); border: 1px dashed var(--accent-mid);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--accent-mid);
+  }
+
+  /* LIGHTBOX — لما تضغط على صورة تكبر */
+  .lightbox {
+    display: none; position: fixed; z-index: 2000;
+    inset: 0; background: rgba(0,0,0,0.85);
+    align-items: center; justify-content: center;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 60px rgba(0,0,0,0.5); }
+  .lightbox-close {
+    position: absolute; top: 24px; right: 32px;
+    color: #fff; font-size: 36px; cursor: pointer; opacity: 0.7;
+  }
+  .lightbox-close:hover { opacity: 1; }
+
+  /* MODAL BODY TEXT */
+  .modal-body { padding: 24px 32px 32px; }
+
+  .modal-body h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.1em;
+    color: var(--accent); text-transform: uppercase;
+    margin: 22px 0 10px;
+  }
+  .modal-body h3:first-child { margin-top: 0; }
+
+  .modal-body p {
+    font-size: 14px; color: var(--text-muted);
+    line-height: 1.75; margin-bottom: 8px;
+  }
+
+  .modal-body ul {
+    list-style: none; padding: 0;
+    display: flex; flex-direction: column; gap: 7px;
+  }
+
+  .modal-body ul li {
+    font-size: 14px; color: var(--text-muted);
+    line-height: 1.65; padding-left: 16px; position: relative;
+  }
+  .modal-body ul li::before {
+    content: '—'; position: absolute; left: 0;
+    color: var(--accent); font-size: 12px;
+  }
+
+  .modal-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
+  .modal-tag {
+    font-size: 11px; padding: 4px 10px; border-radius: 20px;
+    background: var(--accent-light); color: var(--accent);
+    font-family: 'DM Mono', monospace; letter-spacing: 0.04em;
+  }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  @media (max-width: 600px) { .about-grid { grid-template-columns: 1fr; gap: 24px; } }
+  .about-text p { font-size: 15px; color: var(--text-muted); line-height: 1.8; margin-bottom: 14px; }
+  .about-text p:last-child { margin-bottom: 0; }
+  .about-facts { display: flex; flex-direction: column; gap: 16px; }
+  .fact-row { display: flex; gap: 14px; padding: 14px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); align-items: flex-start; }
+  .fact-icon { font-size: 18px; margin-top: 1px; flex-shrink: 0; }
+  .fact-label { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--text-faint); letter-spacing: 0.06em; margin-bottom: 2px; }
+  .fact-value { font-size: 13px; color: var(--text); font-weight: 500; }
+
+  /* CONTACT */
+  .contact-intro { font-size: 15px; color: var(--text-muted); max-width: 440px; margin-bottom: 32px; line-height: 1.75; }
+  .contact-links { display: flex; gap: 12px; flex-wrap: wrap; }
+  .contact-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; color: var(--text); text-decoration: none; background: var(--surface); transition: border-color 0.15s, background 0.15s; }
+  .contact-link:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+  .contact-link.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .contact-link.primary:hover { background: #1448c2; border-color: #1448c2; color: #fff; }
+
+  footer { padding: 28px 24px; text-align: center; font-size: 12px; color: var(--text-faint); font-family: 'DM Mono', monospace; letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">Sara Abdelrahman</a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="wrapper">
+    <h1 class="hero-name">Sara<br><span>Abdelrahman</span></h1>
+    <p class="hero-role">CFD Engineer &nbsp;·&nbsp; Cairo, Egypt</p>
+    <p class="hero-bio">
+      Mechanical Engineer \& CFD Specialist with 3 years experience in sustainable system design, CFD modeling (ANSYS Fluent, FDS/PyroSim), and performance optimization. Delivered projects improving airflow, thermal comfort, and smoke control, and designed hybrid renewable systems (solar-wind and solar tracking). Solid grounding in ASHRAE standards, green building, and sustainable ventilation. Committed to impactful, climate-focused engineering. ASME Petroleum Division Scholarship recipient.
+
+    </p>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">9+</div><div class="stat-desc">CFD projects</div></div>
+      <div class="stat-item"><div class="stat-num">A+</div><div class="stat-desc">graduation project</div></div>
+      <div class="stat-item"><div class="stat-num">5+</div><div class="stat-desc">simulation tools</div></div>
+    </div>
+    <div class="hero-badges">
+      <span class="badge accent">ASME Petroleum Division Scholar</span>
+      <span class="badge">Open to research positions</span>
+      <span class="badge">Cairo, Egypt</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROJECTS
+     تعليمات الصور:
+     - في كل كارت: غيّري src="images/xxx.png" لاسم صورة الـ thumbnail
+     - في الـ modal: غيّري src="images/xxx.png" لكل صورة تضيفيها جوا
+     - لو عايزة placeholder بدل صورة: استخدمي <div class="img-ph">[ image ]</div>
+     ============================================================ -->
+<section id="projects">
+  <div class="wrapper">
+    <p class="section-label">Selected work</p>
+    <h2>Projects</h2>
+    <div class="projects-grid">
+
+      <!-- ==================== PROJECT 1 ==================== -->
+      <div class="proj-card" data-project="1">
+        <img class="proj-img" src="images/Data Center Simulation.png" alt="Data Center CFD">
+        <div class="proj-body">
+          <p class="proj-number">01</p>
+          <h3 class="proj-title">High-Performance Thermal Management and CFD Optimization of a Next-Generation Data Center</h3>
+          <p class="proj-desc">
+            Comprehensive 3D Conjugate Heat Transfer (CHT) and CFD simulation of a high-density data center using ANSYS Fluent. Optimized CRAH/CRAC airflow distribution, hot/cold aisle containment, and server rack thermal profiles.
+          </p>
+          <div class="proj-tags">
+            <span class="proj-tag">ANSYS Fluent</span>
+            <span class="proj-tag">Inventor Autodesk</span>
+            <span class="proj-tag">k-ω SST</span>
+            <span class="proj-tag">Porous Media</span>
+            <span class="proj-tag">CHT</span>
+          </div>
+          <p class="click-hint">↗ click to explore</p>
+        </div>
+      </div>
+
+      <!-- ==================== PROJECT 2 ==================== -->
+      <div class="proj-card" data-project="2">
+        <img class="proj-img" src="images/somke 1.png" alt="Smoke Management">
+        <div class="proj-body">
+          <p class="proj-number">02</p>
+          <h3 class="proj-title">Smoke Management & Fire Dynamics Analysis using PyroSim (FDS)</h3>
+          <p class="proj-desc">
+            CFD-based smoke management and fire dynamics simulations for tunnels, metro stations, parking garages, and large enclosed spaces — evaluating visibility, temperature, CO levels, and ventilation performance.
+          </p>
+          <div class="proj-tags">
+            <span class="proj-tag">PyroSim</span>
+            <span class="proj-tag">FDS</span>
+            <span class="proj-tag">Smoke Management</span>
+            <span class="proj-tag">Jet Fans</span>
+            <span class="proj-tag">Fire Safety</span>
+          </div>
+          <p class="click-hint">↗ click to explore</p>
+        </div>
+      </div>
+
+      <!-- ==================== PROJECT 3 ==================== -->
+      <div class="proj-card" data-project="3">
+        <img class="proj-img" src="images/Data center 1.jpg" alt="Icepak Data Center">
+        <div class="proj-body">
+          <p class="proj-number">03</p>
+          <h3 class="proj-title">High-Fidelity Data Center Thermal Management using ANSYS Icepak</h3>
+          <p class="proj-desc">
+            CFD thermal management analysis for a mission-critical data center using ANSYS Icepak — evaluating airflow distribution, cooling performance, and temperature uniformity under operational IT loading conditions.
+          </p>
+          <div class="proj-tags">
+            <span class="proj-tag">ANSYS Icepak</span>
+            <span class="proj-tag">Raised Floor Ventilation</span>
+            <span class="proj-tag">Heat Transfer</span>
+            <span class="proj-tag">Airflow Analysis</span>
+          </div>
+          <p class="click-hint">↗ click to explore</p>
+        </div>
+      </div>
+
+      <!-- ==================== PROJECT 4 ==================== -->
+      <div class="proj-card" data-project="4">
+        <img class="proj-img" src="images/laser 1.png" alt="Additive Manufacturing">
+        <div class="proj-body">
+          <p class="proj-number">04</p>
+          <h3 class="proj-title">Laser-Based Additive Manufacturing Simulation using ANSYS Fluent</h3>
+          <p class="proj-desc">
+            CFD and thermal simulations of laser-material interaction — modeling melt pool dynamics, heat transfer, porosity formation, and Marangoni convection in powder bed fusion and laser welding applications.
+          </p>
+          <div class="proj-tags">
+            <span class="proj-tag">ANSYS Fluent</span>
+            <span class="proj-tag">Multiphase Flow</span>
+            <span class="proj-tag">Powder Bed Fusion</span>
+            <span class="proj-tag">Marangoni Convection</span>
+          </div>
+          <p class="click-hint">↗ click to explore</p>
+        </div>
+      </div>
+
+      <!-- ==================== PROJECT 5 ==================== -->
+      <div class="proj-card" data-project="5">
+        <img class="proj-img" src="images/solar 1.png" alt="Solar Panel Wind Analysis">
+        <div class="proj-body">
+          <p class="proj-number">05</p>
+          <h3 class="proj-title">Wind Flow Analysis and Structural Design of Solar Panel Trackers</h3>
+          <p class="proj-desc">
+            Aerodynamic CFD analysis and structural design optimization for solar PV tracker systems — evaluating drag, lift, moment forces, and turbulence effects under varying wind speeds and panel tilt angles.
+          </p>
+          <div class="proj-tags">
+            <span class="proj-tag">ANSYS Fluent</span>
+            <span class="proj-tag">ANSYS Mechanical</span>
+            <span class="proj-tag">Wind Flow Analysis</span>
+            <span class="proj-tag">Mesh Independence</span>
+          </div>
+          <p class="click-hint">↗ click to explore</p>
+        </div>
+      </div>
+
+      <!-- ==================== PROJECT 6 ==================== -->
+      <div class="proj-card" data-project="6">
+        <img class="proj-img" src="images/nozzle 1.png" alt="MHD Nozzle">
+        <div class="proj-body">
+          <p class="proj-number">06</p>
+          <h3 class="proj-title">Magnetohydrodynamic (MHD) Flow Analysis in a Converging-Diverging Nozzle</h3>
+          <p class="proj-desc">
+            Multiphysics CFD analysis of electrically conductive flow through a converging-diverging nozzle under a 2 Tesla external magnetic field — investigating velocity, pressure distribution, and electromagnetic force interaction.
+          </p>
+          <div class="proj-tags">
+            <span class="proj-tag">ANSYS Fluent</span>
+            <span class="proj-tag">ANSYS Maxwell</span>
+            <span class="proj-tag">MHD</span>
+            <span class="proj-tag">Electromagnetic Flow</span>
+          </div>
+          <p class="click-hint">↗ click to explore</p>
+        </div>
+      </div>
+
+      <!-- ==================== PROJECT 7 ==================== -->
+      <div class="proj-card" data-project="7">
+        <img class="proj-img" src="images/deflector 1.png" alt="Solar Panel Deflector">
+        <div class="proj-body">
+          <p class="proj-number">07</p>
+          <h3 class="proj-title">Optimization of Solar Panel Spacing and Deflector Design</h3>
+          <p class="proj-desc">
+            Aerodynamic CFD optimization of solar panel array configurations — reducing turbulence intensity, minimizing wind-induced loads, and improving structural stability through deflector integration.
+          </p>
+          <div class="proj-tags">
+            <span class="proj-tag">ANSYS Fluent</span>
+            <span class="proj-tag">Turbulence Reduction</span>
+            <span class="proj-tag">Wind Load Analysis</span>
+            <span class="proj-tag">Deflector Design</span>
+          </div>
+          <p class="click-hint">↗ click to explore</p>
+        </div>
+      </div>
+
+      <!-- ==================== PROJECT 8 ==================== -->
+      <div class="proj-card" data-project="8">
+        <img class="proj-img" src="images/car 2.png" alt="EV Aerodynamics">
+        <div class="proj-body">
+          <p class="proj-number">08</p>
+          <h3 class="proj-title">Electric Vehicle Aerodynamics and Body Optimization</h3>
+          <p class="proj-desc">
+            Aerodynamic CFD analysis and lightweight body optimization for an electric vehicle — evaluating drag reduction, lift forces, pressure distribution, and wake formation to improve performance and stability.
+          </p>
+          <div class="proj-tags">
+            <span class="proj-tag">ANSYS Fluent</span>
+            <span class="proj-tag">SolidWorks</span>
+            <span class="proj-tag">Vehicle Aerodynamics</span>
+            <span class="proj-tag">Drag Reduction</span>
+          </div>
+          <p class="click-hint">↗ click to explore</p>
+        </div>
+      </div>
+
+      <!-- ==================== PROJECT 9 ==================== -->
+      <div class="proj-card" data-project="9">
+        <img class="proj-img" src="images/tunnel 1.png" alt="Tunnel Smoke">
+        <div class="proj-body">
+          <p class="proj-number">09</p>
+          <h3 class="proj-title">Tunnel Smoke Management Analysis using ANSYS Fluent</h3>
+          <p class="proj-desc">
+            CFD-based smoke management and ventilation analysis for tunnel fire scenarios — evaluating smoke propagation, temperature behavior, visibility, and jet fan performance under emergency fire events.
+          </p>
+          <div class="proj-tags">
+            <span class="proj-tag">ANSYS Fluent</span>
+            <span class="proj-tag">Smoke Management</span>
+            <span class="proj-tag">Tunnel Ventilation</span>
+            <span class="proj-tag">Tenability Analysis</span>
+          </div>
+          <p class="click-hint">↗ click to explore</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrapper">
+    <p class="section-label">Technical expertise</p>
+    <h2>Skills & tools</h2>
+    <div class="skills-group">
+      <p class="skills-group-title">CFD SOLVERS</p>
+      <div class="chips">
+        <span class="chip primary">ANSYS Fluent</span>
+        <span class="chip primary">ANSYS Icepak</span>
+        <span class="chip primary">PyroSim / FDS</span>
+        <span class="chip">Ansys Mechanical</span>
+        <span class="chip">Inventor</span>
+        <span class="chip">OpenFOAM</span>
+        <span class="chip">ANSYS CFX</span>
+      </div>
+    </div>
+    <div class="skills-group">
+      <p class="skills-group-title">MESHING & GEOMETRY</p>
+      <div class="chips">
+        <span class="chip primary">ANSYS Meshing</span>
+        <span class="chip">Inventor Autodesk</span>
+        <span class="chip">SolidWorks</span>
+        <span class="chip">ICEM CFD</span>
+      </div>
+    </div>
+    <div class="skills-group">
+      <p class="skills-group-title">MULTIPHYSICS</p>
+      <div class="chips">
+        <span class="chip primary">ANSYS Maxwell (MHD)</span>
+        <span class="chip">ANSYS Mechanical</span>
+        <span class="chip">ANSYS Thermal</span>
+        <span class="chip">Conjugate Heat Transfer</span>
+      </div>
+    </div>
+    <div class="skills-group">
+      <p class="skills-group-title">PROGRAMMING & POST-PROCESSING</p>
+      <div class="chips">
+        <span class="chip primary">Python</span>
+        <span class="chip">MATLAB</span>
+        <span class="chip">Data Analysis</span>
+        <span class="chip">LaTeX</span>
+      </div>
+    </div>
+    <div class="skills-group">
+      <p class="skills-group-title">METHODS & PHYSICS</p>
+      <div class="chips">
+        <span class="chip">RANS turbulence modeling</span>
+        <span class="chip">Conjugate Heat Transfer</span>
+        <span class="chip">Multiphase flow</span>
+        <span class="chip">External aerodynamics</span>
+        <span class="chip">Fire dynamics</span>
+        <span class="chip">Porous media</span>
+        <span class="chip">MHD</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrapper">
+    <p class="section-label">Background</p>
+    <h2>About me</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a CFD engineer based in Cairo with a background spanning thermal-fluid systems,
+          fire dynamics, and external aerodynamics. My work focuses on numerical simulation
+          across a wide range of physical regimes — from data center cooling to vehicle aerodynamics
+          and magnetohydrodynamic flows.
+        </p>
+        <p>
+          I'm currentlyworking as CFD Engineer in Shaker Consultancy Group.
+          I'm motivated by the challenge of pushing simulation methods into new physical regimes.
+        </p>
+
+          
+        
+      </div>
+      <div class="about-facts">
+        <div class="fact-row">
+          <span class="fact-icon">🎓</span>
+          <div>
+            <p class="fact-label">EDUCATION</p>
+            <p class="fact-value">B.Sc. Mechanical Engineering — [Egypt Japan University of Science and Technology]</p>
+          </div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">🏆</span>
+          <div>
+            <p class="fact-label">AWARD</p>
+            <p class="fact-value">ASME Petroleum Division Scholarship — the first recipient from Egypt</p>
+          </div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">📍</span>
+          <div>
+            <p class="fact-label">LOCATION</p>
+            <p class="fact-value">Cairo, Egypt</p>
+          </div>
+        </div>
+        
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrapper">
+    <p class="section-label">Get in touch</p>
+    <h2>Contact</h2>
+    <p class="contact-intro">
+      Open to research collaborations, PhD positions, and CFD positions.
+      Feel free to reach out.
+    </p>
+    <div class="contact-links">
+      <a class="contact-link primary" href="mailto:sara.abdelmotaleb@ejust.edu.eg">✉ Email me</a>
+      <a class="contact-link" href="https://linkedin.com/in/saraeid155" target="_blank">LinkedIn ↗</a>
+      <a class="contact-link" href="https://github.com/yourusername" target="_blank">GitHub ↗</a>
+      <a class="contact-link" href="CFD_Engineer.pdf" target="_blank">Download CV</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODAL (popup)
+     ============================================================ -->
+<div id="projectModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <p class="modal-proj-num" id="modalNum"></p>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <button class="close-btn" id="closeBtn">✕</button>
+    </div>
+
+    <!-- ============================================================
+         IMAGE GALLERY — هنا بتحطي صور كل مشروع
+         الصور دي بتظهر جوا الـ modal لما حد يضغط على الكارت
+         ============================================================ -->
+    <div class="modal-gallery" id="modalGallery"></div>
+
+    <!-- نص التفاصيل -->
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightboxClose">✕</span>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<footer>Sara Abdelrahman · CFD Engineer · Cairo</footer>
+
+<script>
+// ============================================================
+// بيانات المشاريع — عدّلي هنا بس
+// images: مصفوفة بمسارات الصور لكل مشروع
+// num: رقم المشروع
+// title: عنوان المشروع
+// sections: أقسام النص — كل قسم عنده heading + bullets
+// ============================================================
+const PROJECTS = {
+
+  1: {
+    num: "PROJECT 01",
+    title: "High-Performance Thermal Management and CFD Optimization of a Next-Generation Data Center",
+    // ---- صور المشروع — زيدي أو شيلي حسب اللي عندك ----
+    images: [
+      "images/Data Center Simulation.png",
+      "images/Data Center 2.png",
+      "images/Data Center 3.png",
+      "images/Data Center 4.jpg",
+      //"images/Data Center Simulation.png",
+     // "images/Data Center Simulation.png",
+      // "images/datacenter-2.png",   // أضيفي صور تانية هنا
+      // "images/datacenter-3.png",
+    ],
+    sections: [
+      {
+        heading: "Project Overview & Objectives",
+        bullets: [
+          "High-fidelity CFD analysis of a high-density enterprise data center to evaluate and optimize aerothermal performance.",
+          "Evaluated baseline thermal profiles under an N+1 redundant CRAH/CRAC system delivering low-temperature chilled air.",
+          "Primary goals: evaluate underfloor plenum airflow distribution, predict thermal hotspots, map air recirculation paths, and ensure ASHRAE TC 9.9 compliance."
+        ]
+      },
+      {
+        heading: "Iterative Model Refinement & Calibration",
+        bullets: [
+          "Thermal Load Calibration: volumetric heat sources adjusted from preliminary estimates to final actual IT load profiles — enhancing accuracy of buoyancy-driven flow paths and localized thermal plume behavior.",
+          "Plenum Static Pressure Optimization: perforated floor tile porosity (open-area ratio) optimized to minimize flow maldistribution, ensuring uniform vertical air jet distribution across all tiles.",
+          "Model underwent rigorous design iterations aligned with ASHRAE TC 9.9 and Uptime Institute Tier III evaluation criteria."
+        ]
+      },
+      {
+        heading: "Standards Compliance & Engineering Outcomes",
+        bullets: [
+          "Confirmed strict compliance of rack inlet temperatures with ASHRAE TC 9.9 thermal envelopes under normal and redundant cooling failure scenarios.",
+          "Verified maximum instantaneous rack intake temperatures remain below critical threshold limits, preventing thermal throttling.",
+          "Enhanced containment system optimization reduced bypass air mixing and improved overall Power Usage Effectiveness (PUE)."
+        ]
+      }
+    ],
+    tags: ["ANSYS Fluent", "Inventor Autodesk", "k-ω SST", "Porous Media", "RANS", "CHT", "ASHRAE TC 9.9"]
+  },
+
+  2: {
+    num: "PROJECT 02",
+    title: "Smoke Management & Fire Dynamics Analysis using PyroSim (FDS)",
+    images: [
+      "images/somke 1.png",
+      "images/somke 2.png",
+      "images/somke 3.png",
+      "images/somke 4.png",
+      "images/somke 5.png",
+      "images/somke 6.png",
+      // "images/smoke-2.png",
+      // "images/smoke-3.png",
+    ],
+    sections: [
+      {
+        heading: "Scope & Applications",
+        bullets: [
+          "Simulated smoke management and fire dynamics for metro stations, tunnels, parking garages, commercial buildings, and mechanically ventilated spaces.",
+          "Evaluated smoke propagation, visibility levels, temperature distribution, CO concentration, and airflow behavior under different fire scenarios.",
+          "Ensured safe evacuation conditions and compliance with NFPA, ASHRAE, and performance-based design requirements."
+        ]
+      },
+      {
+        heading: "Methodology",
+        bullets: [
+          "Recreated full project geometries in PyroSim from architectural and MEP layouts.",
+          "Generated structured computational meshes with careful attention to mesh alignment, quality, and domain optimization.",
+          "Defined fire growth scenarios, material properties, heat release rates (HRR), boundary conditions, and ventilation configurations.",
+          "Integrated jet fans, exhaust systems, and natural ventilation openings based on project requirements.",
+          "Evaluated multiple design cases to optimize smoke extraction performance."
+        ]
+      },
+      {
+        heading: "Results & Post-Processing",
+        bullets: [
+          "Smoke visibility contours at human-level assessment planes (~1.8 m height).",
+          "Temperature distribution and CO concentration profiles.",
+          "Air velocity vectors, streamlines, and smoke layer development analysis.",
+          "Results demonstrated effective smoke control, tenable evacuation conditions, and safe egress support during fire events."
+        ]
+      }
+    ],
+    tags: ["PyroSim", "FDS", "Smoke Management", "Jet Fans", "HVAC", "Fire Safety Engineering", "Evacuation Safety"]
+  },
+
+  3: {
+    num: "PROJECT 03",
+    title: "High-Fidelity Data Center Thermal Management using ANSYS Icepak",
+    images: [
+      "images/Data center 1.jpg",
+      "images/icepak 3.jpg",
+      "images/icepak 4.jpg",
+      "images/icepak 5.jpg",
+      "images/icepak 6.jpg",
+      "images/icepak 7.jpg",
+
+    
+
+      // "images/icepak-2.png",
+    ],
+    sections: [
+      {
+        heading: "Project Overview",
+        bullets: [
+          "CFD-based thermal management and airflow analysis for a mission-critical data center using ANSYS Icepak.",
+          "Focused on cooling efficiency, airflow distribution, temperature uniformity, and raised floor performance under operational IT loading conditions.",
+          "Detailed 3D modeling including server racks, CRAC units, raised floor plenum, perforated floor tiles, and airflow pathways."
+        ]
+      },
+      {
+        heading: "Methodology",
+        bullets: [
+          "Structured computational meshes generated with local refinements near critical thermal regions.",
+          "Updated operational parameters: revised IT loads and optimized perforated tile porosity to improve static pressure distribution.",
+          "Multiple airflow and cooling scenarios evaluated to assess thermal performance and identify potential hotspots."
+        ]
+      },
+      {
+        heading: "Results",
+        bullets: [
+          "Temperature contours and thermal distribution maps.",
+          "Airflow velocity vectors and streamlines throughout the white space.",
+          "Rack inlet temperature evaluation and cooling effectiveness analysis.",
+          "Raised floor pressure distribution and airflow balancing assessment.",
+          "Demonstrated improved airflow uniformity and enhanced cooling performance while maintaining acceptable thermal conditions for IT equipment."
+        ]
+      }
+    ],
+    tags: ["ANSYS Icepak", "Data Center Cooling", "Raised Floor Ventilation", "Heat Transfer", "Airflow Analysis"]
+  },
+
+  4: {
+    num: "PROJECT 04",
+    title: "Laser-Based Additive Manufacturing Simulation using ANSYS Fluent",
+    images: [
+      "images/laser 1.png",
+      "images/laser 2.png",
+      "images/laser 3.png",
+      "images/laser 4.png",
+      "images/laser 5.png",
+      "images/laser 6.png",
+      // "images/laser-2.png",
+      // "images/laser-3.png",
+    ],
+    sections: [
+      {
+        heading: "Project Overview",
+        bullets: [
+          "CFD and thermal simulations for laser-based additive manufacturing and laser welding processes using ANSYS Fluent.",
+          "Modeled laser-material interaction, melt pool dynamics, heat transfer behavior, and porosity formation mechanisms.",
+          "Applications in powder bed fusion and keyhole welding regimes."
+        ]
+      },
+      {
+        heading: "Methodology",
+        bullets: [
+          "Incorporated Gaussian laser beam heat sources with transient thermal-fluid analysis.",
+          "Evaluated temperature distribution, melt pool evolution, recoil pressure effects, surface tension forces, and Marangoni convection phenomena.",
+          "Geometry preparation, mesh generation with localized refinement near the laser interaction zone.",
+          "Implemented multiphase thermal-fluid models to capture transient melting and solidification behavior."
+        ]
+      },
+      {
+        heading: "Results & Engineering Impact",
+        bullets: [
+          "Melt pool morphology and dynamics analysis.",
+          "Surface tension (Marangoni) flow behavior and recoil pressure effects in keyhole regimes.",
+          "Perform a pulsed laser key-hole welding simulation and observe porosity formation.",
+          "Provided insights into process optimization for reducing porosity and improving structural integrity.",
+          "Applications in aerospace, medical, and advanced metal additive manufacturing industries."
+        ]
+      }
+    ],
+    tags: ["ANSYS Fluent", "Multiphase Flow", "Powder Bed Fusion", "Porosity Analysis", "Marangoni Convection", "Thermal Simulation", "Additive Manufacturing"]
+  },
+
+  5: {
+    num: "PROJECT 05",
+    title: "Wind Flow Analysis and Structural Design of Solar Panel Trackers",
+    images: [
+      "images/solar 1.png",
+      "images/solar 2.jpg",
+      "images/solar 3.png",
+      "images/solar 4.png",
+      "images/solar 5.png",
+      "images/solar 6.png",
+      // "images/solar-2.png",
+      // "images/solar-3.png",
+    ],
+    sections: [
+      {
+        heading: "Project Overview",
+        bullets: [
+          "CFD-based aerodynamic analysis and structural design optimization for solar PV tracker systems.",
+          "Evaluated airflow behavior, turbulence characteristics, surface pressure distribution, and aerodynamic force coefficients (drag, lift, moment).",
+          "Analyzed varying wind velocities and solar panel tilt angles."
+        ]
+      },
+      {
+        heading: "Methodology",
+        bullets: [
+          "Geometry preparation, domain generation, and computational mesh with inflation layers for accurate near-wall flow predictions.",
+          "Mesh independence studies performed to validate numerical stability and solution accuracy.",
+          "Multiple cases analyzed at different wind velocities and tilt angles.",
+          "Obstacle-based flow control strategies evaluated to reduce turbulence intensity."
+        ]
+      },
+      {
+        heading: "Results",
+        bullets: [
+          "Velocity and pressure contours, streamlines, and turbulence behavior.",
+          "Drag, lift, and moment coefficient evaluation.",
+          "Flow separation and wake region analysis.",
+          "Improved aerodynamic performance and enhanced structural efficiency of the solar tracker system.",
+          "Increased operational stability and optimized solar panel efficiency under varying environmental conditions."
+        ]
+      }
+    ],
+    tags: ["ANSYS Fluent", "ANSYS Mechanical", "ANSYS Thermal", "Wind Flow Analysis", "Turbulence Modeling", "Mesh Independence"]
+  },
+
+  6: {
+    num: "PROJECT 06",
+    title: "Magnetohydrodynamic (MHD) Flow Analysis in a Converging-Diverging Nozzle",
+    images: [
+      "images/nozzle 1.png",
+      "images/nozzle 2.png",
+      "images/nozzle 3.png",
+      "images/nozzle 4.png",
+      "images/nozzle 5.png",
+      "images/nozzle 6.png",
+
+      // "images/mhd-2.png",
+    ],
+    sections: [
+      {
+        heading: "Project Overview",
+        bullets: [
+          "Multiphysics CFD simulations of electrically conductive flow through a converging-diverging nozzle under an external magnetic field using ANSYS Fluent.",
+          "Analyzed the interaction between fluid flow and electromagnetic forces within the nozzle throat region.",
+          "Applied magnetic field intensity of 2 Tesla via a conductive wire integrated around the nozzle throat."
+        ]
+      },
+      {
+        heading: "Methodology",
+        bullets: [
+          "Detailed nozzle geometry preparation and structured mesh generation with localized refinement near the throat section.",
+          "Implementation of magnetohydrodynamic (MHD) flow conditions coupled with ANSYS Maxwell for electromagnetic field computation.",
+          "Multiple simulation cases evaluated to analyze the influence of magnetic forces on flow behavior."
+        ]
+      },
+      {
+        heading: "Results",
+        bullets: [
+          "Velocity distribution and pressure variation through the nozzle under magnetic influence.",
+          "Electromagnetic force interaction and flow stability near the throat region.",
+          "Turbulence and recirculation behavior comparison: magnetically assisted vs. baseline flow.",
+          "Demonstrated potential application of MHD-assisted nozzle systems in advanced thermal-fluid and propulsion engineering."
+        ]
+      }
+    ],
+    tags: ["ANSYS Fluent", "ANSYS Maxwell", "MHD", "Electromagnetic Flow", "Magnetic Field", "Thermal Fluids", "Propulsion"]
+  },
+
+  7: {
+    num: "PROJECT 07",
+    title: "Optimization of Solar Panel Spacing and Deflector Design",
+    images: [
+      "images/deflector 1.png",
+      "images/deflector 2.png",
+      "images/deflector 3.png",
+      "images/deflector 4.png",
+      "images/deflector 5.png",
+      // "images/deflector-2.png",
+      // "images/deflector-3.png",
+    ],
+    sections: [
+      {
+        heading: "Project Overview",
+        bullets: [
+          "CFD-based aerodynamic analysis and optimization of solar panel array configurations using ANSYS Fluent.",
+          "Investigated influence of panel spacing and deflector integration on turbulence intensity, surface pressure, and wind-induced structural loading.",
+          "High-quality meshing: 10 inflation layers, refined first-layer thickness, orthogonal mesh quality ~0.22."
+        ]
+      },
+      {
+        heading: "Methodology",
+        bullets: [
+          "Geometry preparation, computational domain generation, and mesh development with inflation layers.",
+          "Multiple configurations analyzed under different wind conditions.",
+          "Deflector designs introduced and optimized to reduce wake formation, flow separation, and turbulence on downstream panels."
+        ]
+      },
+      {
+        heading: "Results",
+        bullets: [
+          "Velocity and turbulence contours, surface pressure distribution.",
+          "Wake region and flow separation analysis across configurations.",
+          "Wind load and aerodynamic force evaluation per panel spacing.",
+          "Optimized configuration demonstrated reduced turbulence intensity, improved airflow uniformity, and enhanced structural stability.",
+          "Reduced risk of wind-induced damage in high-wind environments."
+        ]
+      }
+    ],
+    tags: ["ANSYS Fluent", "Turbulence Reduction", "Wind Load Analysis", "Deflector Design", "Flow Separation", "Aerodynamics"]
+  },
+
+  8: {
+    num: "PROJECT 08",
+    title: "Electric Vehicle Aerodynamics and Body Optimization",
+    images: [
+      "images/car 2.png",
+      "images/car 1.png",
+      "images/car 3.png",
+      "images/car 4.png",
+      "images/car 5.png",
+
+      // "images/car-2.png",
+      // "images/car-3.png",
+    ],
+    sections: [
+      {
+        heading: "Project Overview",
+        bullets: [
+          "CFD-based aerodynamic analysis and body optimization for an electric vehicle (EVER) using ANSYS Fluent and SolidWorks.",
+          "Improved vehicle aerodynamic efficiency by analyzing airflow, drag, lift, wake formation, and pressure distribution.",
+          "Lightweight structural design using fiberglass materials to reduce body weight while maintaining structural integrity."
+        ]
+      },
+      {
+        heading: "Methodology",
+        bullets: [
+          "Geometry preparation, computational domain generation, and mesh with local refinements near the vehicle surface.",
+          "Multiple aerodynamic cases evaluated under different flow conditions.",
+          "Iterative body design modifications assessed for drag reduction and flow uniformity."
+        ]
+      },
+      {
+        heading: "Results",
+        bullets: [
+          "Velocity contours and streamlines around the vehicle body.",
+          "Pressure distribution and drag/lift force evaluation.",
+          "Wake region and flow separation analysis between design iterations.",
+          "Reduced drag, improved flow uniformity, enhanced vehicle stability, and increased overall speed performance."
+        ]
+      }
+    ],
+    tags: ["ANSYS Fluent", "SolidWorks", "Vehicle Aerodynamics", "Electric Vehicles", "Drag Reduction", "Streamlines", "Lightweight Design"]
+  },
+
+  9: {
+    num: "PROJECT 09",
+    title: "Tunnel Smoke Management Analysis using ANSYS Fluent",
+    images: [
+      "images/tunnel 1.png",
+      "images/tunnel 3.png",
+      "images/tunnel 5.png",
+      "images/tunnel 6.png",
+      "images/tunnel 8.png",
+      // "images/tunnel-2.png",
+      // "images/tunnel-3.png",
+    ],
+    sections: [
+      {
+        heading: "Project Overview",
+        bullets: [
+          "CFD-based smoke management and ventilation analysis for tunnel fire scenarios using ANSYS Fluent.",
+          "Evaluated smoke propagation, airflow distribution, temperature behavior, visibility, and ventilation effectiveness during emergency fire events.",
+          "Analyzed longitudinal ventilation and jet fan-assisted smoke extraction systems."
+        ]
+      },
+      {
+        heading: "Methodology",
+        bullets: [
+          "Tunnel geometry preparation, computational domain generation, and high-quality mesh with local refinements.",
+          "Multiple ventilation scenarios analyzed including jet fan configurations.",
+          "Assessed influence of ventilation strategies on smoke control, safe evacuation conditions, and smoke layer management."
+        ]
+      },
+      {
+        heading: "Results",
+        bullets: [
+          "Smoke concentration contours and velocity distribution streamlines.",
+          "Temperature distribution and visibility/tenability assessment.",
+          "Jet fan performance evaluation and turbulence/smoke dispersion behavior.",
+          "Demonstrated effective smoke control, tenable evacuation conditions, and full compliance with tunnel fire safety requirements."
+        ]
+      }
+    ],
+    tags: ["ANSYS Fluent", "Smoke Management", "Tunnel Ventilation", "Turbulence Modeling", "Tenability Analysis", "Thermal Analysis"]
+  }
+
+};
+
+// ============================================================
+// MODAL LOGIC — مش محتاجة تغيري هنا
+// ============================================================
+const modal    = document.getElementById("projectModal");
+const modalNum = document.getElementById("modalNum");
+const modalTitle = document.getElementById("modalTitle");
+const modalGallery = document.getElementById("modalGallery");
+const modalBody  = document.getElementById("modalBody");
+const closeBtn   = document.getElementById("closeBtn");
+const lightbox   = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+const lightboxClose = document.getElementById("lightboxClose");
+
+document.querySelectorAll('.proj-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const id = parseInt(card.dataset.project);
+    const p  = PROJECTS[id];
+    if (!p) return;
+
+    // رقم وعنوان
+    modalNum.textContent   = p.num;
+    modalTitle.textContent = p.title;
+
+    // gallery الصور
+    modalGallery.innerHTML = "";
+    if (p.images && p.images.length > 0) {
+      p.images.forEach(src => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = p.title;
+        img.addEventListener('click', e => {
+          e.stopPropagation();
+          lightboxImg.src = src;
+          lightbox.classList.add('active');
+        });
+        modalGallery.appendChild(img);
+      });
+      modalGallery.style.display = "grid";
+    } else {
+      modalGallery.style.display = "none";
+    }
+
+    // نص التفاصيل
+    let html = "";
+    p.sections.forEach(s => {
+      html += `<h3>${s.heading}</h3><ul>`;
+      s.bullets.forEach(b => { html += `<li>${b}</li>`; });
+      html += `</ul>`;
+    });
+    // tags
+    if (p.tags && p.tags.length) {
+      html += `<div class="modal-tags">`;
+      p.tags.forEach(t => { html += `<span class="modal-tag">${t}</span>`; });
+      html += `</div>`;
+    }
+    modalBody.innerHTML = html;
+
+    modal.style.display = "block";
+    document.body.style.overflow = "hidden";
+  });
+});
+
+function closeModal() {
+  modal.style.display = "none";
+  document.body.style.overflow = "";
+}
+
+closeBtn.addEventListener('click', closeModal);
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+lightboxClose.addEventListener('click', () => lightbox.classList.remove('active'));
+lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('active'); });
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+
+</body>
+</html>
